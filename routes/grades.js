@@ -93,4 +93,36 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
+router.get("/:id", async (req, res, next) => {
+  try {
+    const data = await readGradesFile();
+    const grade = data.grades.find(
+      (grade) => grade.id === parseInt(req.params.id)
+    );
+
+    res.send(grade);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/:student/:subject", async (req, res, next) => {
+  try {
+    const data = await readGradesFile();
+    const grade = data.grades.filter(
+      (grade) =>
+        grade.student === req.params.student &&
+        grade.subject === req.params.subject
+    );
+
+    const values = grade.map((value) => value.value);
+    const sum = values.reduce((acc, cur) => a + b);
+
+    res.send(`
+    The sum of this student's grades in this subject is ${sum}`);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

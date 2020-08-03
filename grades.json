@@ -1,5 +1,5 @@
 {
-  "nextId": 50,
+  "nextId": 51,
   "grades": [
     {
       "id": 1,
@@ -392,6 +392,14 @@
       "type": "Desafio",
       "value": "39.5",
       "timestamp": "2020-08-03T14:28:04.469Z"
+    },
+    {
+      "id": 50,
+      "student": "Dudu",
+      "subject": "Javascript",
+      "type": "Trabalho Prático",
+      "value": "25",
+      "timestamp": "2020-08-03T23:13:04.365Z"
     }
   ]
 }
