@@ -151,4 +151,21 @@ router.get("/average/:subject/:type", async (req, res, next) => {
   }
 });
 
+router.get("/top3/:subject/:type", async (req, res, next) => {
+  try {
+    const data = await readGradesFile();
+
+    const grade = data.grades.filter(
+      (grade) =>
+        grade.subject === req.params.subject && grade.type === req.params.type
+    );
+
+    const top3 = grade.map((value) => value.value).sort((a, b) => b - a);
+
+    res.send(top3);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;
