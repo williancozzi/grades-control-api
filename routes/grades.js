@@ -109,6 +109,7 @@ router.get("/:id", async (req, res, next) => {
 router.get("/:student/:subject", async (req, res, next) => {
   try {
     const data = await readGradesFile();
+
     const grade = data.grades.filter(
       (grade) =>
         grade.student === req.params.student &&
@@ -116,10 +117,35 @@ router.get("/:student/:subject", async (req, res, next) => {
     );
 
     const values = grade.map((value) => value.value);
-    const sum = values.reduce((acc, cur) => a + b);
+
+    const sum = values.reduce((acc, cur) => acc + cur);
 
     res.send(`
     The sum of this student's grades in this subject is ${sum}`);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/average/:subject/:type", async (req, res, next) => {
+  try {
+    const data = await readGradesFile();
+
+    const grade = data.grades.filter(
+      (grade) =>
+        grade.subject === req.params.subject && grade.type === req.params.type
+    );
+
+    const values = grade.map((value) => value.value);
+
+    const sum = values.reduce((acc, cur) => acc + cur);
+
+    const average = sum / values.length;
+
+    res.send(`
+    Subject: ${req.params.subject}, 
+    type: ${req.params.type}, 
+    average grades: ${average.toFixed(2)}`);
   } catch (error) {
     next(error);
   }
