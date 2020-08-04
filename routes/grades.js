@@ -160,7 +160,10 @@ router.get("/top3/:subject/:type", async (req, res, next) => {
         grade.subject === req.params.subject && grade.type === req.params.type
     );
 
-    const top3 = grade.map((value) => value.value).sort((a, b) => b - a);
+    const top3 = grade
+      .map((value) => value.value)
+      .sort((a, b) => b - a)
+      .slice(0, 3);
 
     res.send(top3);
   } catch (error) {
